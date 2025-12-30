@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button, Form } from 'react-bootstrap'
 import { closeModal } from '../slice'
+import { setCurrentChannel } from '../slice/channelsSlice' // Импортируем setCurrentChannel
 import { SocketContext } from '../context'
 import { getAddChannelSchema } from '../schema'
 import { profanityFilter } from '../util'
@@ -30,6 +31,7 @@ const AddChannelModal = () => {
             toast.success(t('channelCreated'))
 
             dispatch(closeModal())
+            dispatch(setCurrentChannel(response.data.id)) // Переключаем на новый канал
           }
 
           setSubmitting(false)
