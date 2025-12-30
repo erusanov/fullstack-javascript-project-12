@@ -46,13 +46,19 @@ const AddChannelModal = () => {
           <Form.Control
             className="mb-2"
             name="name"
+            id="new_channel_name"
             onChange={formik.handleChange}
             value={formik.values.name}
             isInvalid={formik.errors.name && formik.touched.name}
             disabled={formik.isSubmitting}
             autoFocus={true}
           />
-          <Form.Label visuallyHidden={true}>{t('channelName')}</Form.Label>
+          <Form.Label
+            htmlFor="new_channel_name"
+            visuallyHidden={true}
+          >
+            {t('channelName')}
+          </Form.Label>
           <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
         </Form.Group>
         <div className="d-flex justify-content-end">
