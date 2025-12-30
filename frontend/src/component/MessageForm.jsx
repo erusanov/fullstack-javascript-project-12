@@ -45,7 +45,7 @@ const MessageForm = () => {
             >
               <Field
                 name="body"
-                aria-label={t('enterMessage')}
+                aria-label="Новое сообщение"
                 placeholder={t('enterMessage')}
                 className="border-0 p-0 ps-2 form-control"
                 value={values.body}
