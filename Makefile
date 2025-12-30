@@ -1,11 +1,9 @@
 install:
-	npm --prefix frontend install
+	npm i
+	npm --prefix frontend i
 
 build:
 	npm --prefix frontend run build
-
-dev:
-	npm --prefix frontend run dev
 
 lint:
 	npm --prefix frontend run lint
