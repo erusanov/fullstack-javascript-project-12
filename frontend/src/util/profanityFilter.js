@@ -1,6 +1,15 @@
 import profanityFilter from 'leo-profanity'
 
-profanityFilter.loadDictionary('ru')
+profanityFilter.addDictionary(
+  'multi',
+  Array
+    .from(
+      new Set([
+        ...profanityFilter.getDictionary('ru'),
+        ...profanityFilter.getDictionary('en'),
+      ]),
+    ),
+)
 
 export {
   profanityFilter,
