@@ -9,6 +9,7 @@ import { setAuth } from '../slice'
 import { AuthLayout } from '../layout'
 import { getLoginSchema } from '../schema'
 import avatar from '../assets/avatar-DIE1AEpS.jpg'
+import { Header } from '../component'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -46,79 +47,83 @@ const LoginPage = () => {
   })
 
   return (
-    <AuthLayout
-      footer={(
-        <div className="text-center">
-          <span>{t('noAccount')}</span>
-          <Link
-            to="/signup"
-          >
-            {t('signupLink')}
-          </Link>
+    <div className="d-flex flex-column h-100">
+      <Header />
+
+      <AuthLayout
+        footer={(
+          <div className="text-center">
+            <span>{t('noAccount')}</span>
+            <Link
+              to="/signup"
+            >
+              {t('signupLink')}
+            </Link>
+          </div>
+        )}
+      >
+        <div
+          className="col-12 col-md-6 d-flex align-items-center justify-content-center"
+        >
+          <img
+            src={avatar}
+            className="rounded-circle"
+            alt={t('login')}
+          />
         </div>
-      )}
-    >
-      <div
-        className="col-12 col-md-6 d-flex align-items-center justify-content-center"
-      >
-        <img
-          src={avatar}
-          className="rounded-circle"
-          alt={t('login')}
-        />
-      </div>
-      <Form
-        onSubmit={formik.handleSubmit}
-        className="col-12 col-md-6 mt-3 mt-md-0"
-      >
-        <h1
-          className="text-center mb-4"
+        <Form
+          onSubmit={formik.handleSubmit}
+          className="col-12 col-md-6 mt-3 mt-md-0"
         >
-          {t('login')}
-        </h1>
-        <FloatingLabel
-          controlId="username"
-          label={t('yourNickname')}
-          className="mb-3"
-        >
-          <Form.Control
-            name="username"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-            isInvalid={authError}
-            disabled={formik.isSubmitting}
-            autoFocus
-          />
-        </FloatingLabel>
-        <FloatingLabel
-          controlId="password"
-          label={t('password')}
-          className="mb-4"
-        >
-          <Form.Control
-            type="password"
-            name="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            isInvalid={authError}
-            disabled={formik.isSubmitting}
-          />
-          <Form.Control.Feedback
-            type="invalid"
+          <h1
+            className="text-center mb-4"
           >
-            {authError}
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        <Button
-          type="submit"
-          variant="outline-primary"
-          className="w-100 mb-3"
-          disabled={formik.isSubmitting}
-        >
-          {t('login')}
-        </Button>
-      </Form>
-    </AuthLayout>
+            {t('login')}
+          </h1>
+          <FloatingLabel
+            controlId="username"
+            label={t('yourNickname')}
+            className="mb-3"
+          >
+            <Form.Control
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              isInvalid={authError}
+              disabled={formik.isSubmitting}
+              autoFocus
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="password"
+            label={t('password')}
+            className="mb-4"
+          >
+            <Form.Control
+              type="password"
+              name="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              isInvalid={authError}
+              disabled={formik.isSubmitting}
+            />
+            <Form.Control.Feedback
+              type="invalid"
+            >
+              {authError}
+            </Form.Control.Feedback>
+          </FloatingLabel>
+          <Button
+            type="submit"
+            variant="outline-primary"
+            className="w-100 mb-3"
+            disabled={formik.isSubmitting}
+          >
+            {t('login')}
+          </Button>
+        </Form>
+      </AuthLayout>
+    </div>
   )
 }
 
