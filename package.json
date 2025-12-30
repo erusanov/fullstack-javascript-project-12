@@ -5,8 +5,17 @@
   "main": "index.js",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6",
+    "@rollbar/react": "^1.0.0",
+    "bootstrap": "^5.3.8",
+    "i18next": "^25.7.3",
+    "leo-profanity": "^1.8.0",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.3",
+    "react-i18next": "^16.5.0",
+    "react-toastify": "^11.0.5",
+    "socket.io-client": "^4.8.2",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.2",

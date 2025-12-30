@@ -1,3 +1,6 @@
+install:
+	npm --prefix frontend install
+
 build:
 	npm --prefix frontend run build
 
@@ -13,4 +16,4 @@ lintfix:
 start:
 	npx start-server -s ./frontend/dist
 
-.PHONY: build start
+.PHONY: install build start
