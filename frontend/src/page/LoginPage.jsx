@@ -19,7 +19,7 @@ const LoginPage = () => {
   const validationSchema = getLoginSchema(t)
 
   const formik = useFormik({
-    initialValues: { name: '', password: '' },
+    initialValues: { username: '', password: '' },
     validationSchema,
     onSubmit: async (values) => {
       setAuthError(null)
@@ -27,7 +27,7 @@ const LoginPage = () => {
       try {
         const { data } = await axios.post('/api/v1/login', values)
 
-        dispatch(setAuth({ token: data.token, username: values.name }))
+        dispatch(setAuth({ token: data.token, username: values.username }))
 
         navigate('/')
       }
@@ -88,11 +88,16 @@ const LoginPage = () => {
             <Form.Control
               name="username"
               onChange={formik.handleChange}
-              value={formik.values.name}
-              isInvalid={authError}
+              value={formik.values.username}
+              isInvalid={formik.errors.username || authError}
               disabled={formik.isSubmitting}
               autoFocus
             />
+            <Form.Control.Feedback
+              type="invalid"
+            >
+              {formik.errors.username}
+            </Form.Control.Feedback>
           </FloatingLabel>
           <FloatingLabel
             controlId="password"
@@ -104,13 +109,13 @@ const LoginPage = () => {
               name="password"
               onChange={formik.handleChange}
               value={formik.values.password}
-              isInvalid={authError}
+              isInvalid={formik.errors.password || authError}
               disabled={formik.isSubmitting}
             />
             <Form.Control.Feedback
               type="invalid"
             >
-              {authError}
+              {formik.errors.password || authError}
             </Form.Control.Feedback>
           </FloatingLabel>
           <Button
