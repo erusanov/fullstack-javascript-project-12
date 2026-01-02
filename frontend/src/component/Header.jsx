@@ -27,7 +27,7 @@ const Header = () => {
           as={Link}
           to="/"
         >
-          {t('hexletChat')}
+          {'Hexlet Chat'}
         </Navbar.Brand>
         {isAuth && (
           <Button onClick={handleLogout}>{t('logout')}</Button>
