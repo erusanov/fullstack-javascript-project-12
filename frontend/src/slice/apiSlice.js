@@ -19,7 +19,6 @@ const baseQueryWithAuth = async (args, api, extraOptions) => {
 
   if (result.error?.status === 401) {
     api.dispatch(clearAuth())
-    window.location.pathname = '/login'
   }
 
   return result
