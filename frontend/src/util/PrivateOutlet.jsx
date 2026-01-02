@@ -1,13 +1,15 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-const PrivateRoute = ({ children }) => {
+const PrivateOutlet = () => {
   const { token } = useSelector(state => state.auth)
   const location = useLocation()
 
   return (
     token
-      ? children
+      ? (
+          <Outlet />
+        )
       : (
           <Navigate
             to="/login"
@@ -18,5 +20,5 @@ const PrivateRoute = ({ children }) => {
 }
 
 export {
-  PrivateRoute,
+  PrivateOutlet,
 }

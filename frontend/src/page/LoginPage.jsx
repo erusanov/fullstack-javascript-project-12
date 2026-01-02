@@ -3,13 +3,11 @@ import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 import { Form, Button, FloatingLabel } from 'react-bootstrap'
-import { setAuth } from '../slice'
+import { setAuth, useLoginMutation } from '../slice'
 import { AuthLayout } from '../layout'
 import { getLoginSchema } from '../schema'
 import avatar from '../assets/avatar-DIE1AEpS.jpg'
-import { Header } from '../component'
 
 const LoginPage = () => {
   const { t } = useTranslation()
@@ -17,6 +15,7 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const validationSchema = getLoginSchema(t)
+  const [login] = useLoginMutation()
 
   const formik = useFormik({
     initialValues: { username: '', password: '' },
@@ -25,17 +24,14 @@ const LoginPage = () => {
       setAuthError(null)
 
       try {
-        const { data } = await axios.post('/api/v1/login', values)
+        const data = await login(values).unwrap()
 
         dispatch(setAuth({ token: data.token, username: values.username }))
 
         navigate('/')
       }
       catch (error) {
-        if (
-          error.isAxiosError
-          && error.response.status === 401
-        ) {
+        if (error.status === 401) {
           setAuthError(t('loginFailed'))
 
           return
@@ -47,9 +43,7 @@ const LoginPage = () => {
   })
 
   return (
-    <div className="d-flex flex-column h-100">
-      <Header />
-
+    <>
       <AuthLayout
         footer={(
           <div className="text-center">
@@ -128,7 +122,7 @@ const LoginPage = () => {
           </Button>
         </Form>
       </AuthLayout>
-    </div>
+    </>
   )
 }
 

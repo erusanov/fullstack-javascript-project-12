@@ -15,11 +15,17 @@ import {
 
 import React, { Suspense, lazy } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { PrivateRoute } from '../util'
+import { PrivateOutlet } from '../util'
 import store from './store.js'
-import SocketProvider from '../provider/SocketProvider.jsx'
 import rollbar from './rollbar.js'
-import 'react-toastify/dist/ReactToastify.css'
+import { AppLayout } from '../layout'
+
+const ROUTES = {
+  CHAT: '/',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  OTHER: '*',
+}
 
 const ChatPage = lazy(() => import('../page/ChatPage.jsx'))
 const LoginPage = lazy(() => import('../page/LoginPage.jsx'))
@@ -35,37 +41,37 @@ const App = () => (
         <ReduxProvider
           store={store}
         >
-          <SocketProvider>
-            <Router>
-              <Suspense
-                fallback={<div>Loading...</div>}
-              >
-                <Routes>
-                  <Route
-                    path="/"
-                    element={(
-                      <PrivateRoute>
+          <Router>
+            <Suspense
+              fallback={<div>Loading...</div>}
+            >
+              <Routes>
+                <Route element={<AppLayout />}>
+                  <Route element={<PrivateOutlet />}>
+                    <Route
+                      path={ROUTES.CHAT}
+                      element={(
                         <ChatPage />
-                      </PrivateRoute>
-                    )}
-                  />
+                      )}
+                    />
+                  </Route>
                   <Route
-                    path="/login"
+                    path={ROUTES.LOGIN}
                     element={<LoginPage />}
                   />
                   <Route
-                    path="/signup"
+                    path={ROUTES.SIGNUP}
                     element={<SignupPage />}
                   />
                   <Route
-                    path="*"
+                    path={ROUTES.OTHER}
                     element={<NotFoundPage />}
                   />
-                </Routes>
-              </Suspense>
-            </Router>
-            <ToastContainer />
-          </SocketProvider>
+                </Route>
+              </Routes>
+            </Suspense>
+          </Router>
+          <ToastContainer />
         </ReduxProvider>
       </ErrorBoundary>
     </RollbarProvider>

@@ -5,6 +5,7 @@ import {
   channelsReducer,
   messagesReducer,
   modalsReducer,
+  apiSlice,
 } from '../slice'
 
 export default configureStore({
@@ -13,5 +14,8 @@ export default configureStore({
     channels: channelsReducer,
     messages: messagesReducer,
     modals: modalsReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 })

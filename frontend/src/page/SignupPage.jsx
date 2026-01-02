@@ -3,13 +3,11 @@ import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 import { Form, Button, FloatingLabel } from 'react-bootstrap'
-import { setAuth } from '../slice'
+import { setAuth, useSignupMutation } from '../slice'
 import { AuthLayout } from '../layout'
 import { getSignupSchema } from '../schema'
 import avatar from '../assets/avatar_1-D7Cot-zE.jpg'
-import { Header } from '../component'
 
 const SignupPage = () => {
   const { t } = useTranslation()
@@ -17,6 +15,7 @@ const SignupPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const validationSchema = getSignupSchema(t)
+  const [signup] = useSignupMutation()
 
   const formik = useFormik({
     initialValues: { username: '', password: '', confirmPassword: '' },
@@ -25,14 +24,14 @@ const SignupPage = () => {
       setSignupError(null)
 
       try {
-        const { data } = await axios.post('/api/v1/signup', { username: values.username, password: values.password })
+        const data = await signup({ username: values.username, password: values.password }).unwrap()
 
         dispatch(setAuth({ token: data.token, username: data.username }))
 
         navigate('/')
       }
       catch (error) {
-        if (error.isAxiosError && error.response.status === 409) {
+        if (error.status === 409) {
           setSignupError(t('userExists'))
 
           return
@@ -44,9 +43,7 @@ const SignupPage = () => {
   })
 
   return (
-    <div className="d-flex flex-column h-100">
-      <Header />
-
+    <>
       <AuthLayout>
         <div
           className="col-12 col-md-6 d-flex align-items-center justify-content-center"
@@ -132,7 +129,7 @@ const SignupPage = () => {
           </Button>
         </Form>
       </AuthLayout>
-    </div>
+    </>
   )
 }
 

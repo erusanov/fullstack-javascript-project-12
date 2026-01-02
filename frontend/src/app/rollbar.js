@@ -1,7 +1,7 @@
 import Rollbar from 'rollbar'
 
 const rollbarConfig = {
-  accessToken: '503620b150e94bf1b62378e8dd2a4b14',
+  accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
   environment: 'testenv',
 }
 

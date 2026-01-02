@@ -1,12 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Button, Navbar, Container } from 'react-bootstrap'
 import { clearAuth } from '../slice'
+import { useAuth } from '../hook'
 
 const Header = () => {
   const { t } = useTranslation()
-  const { token } = useSelector(state => state.auth)
+  const { isAuth } = useAuth()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -28,7 +29,7 @@ const Header = () => {
         >
           {t('hexletChat')}
         </Navbar.Brand>
-        {token && (
+        {isAuth && (
           <Button onClick={handleLogout}>{t('logout')}</Button>
         )}
       </Container>
